@@ -1,0 +1,53 @@
+POST http://localhost:8080/api/v1/store
+Content-Type: application/json
+
+{
+  "key": "42",
+  "value": "Shaurya"
+}
+
+###
+PUT http://localhost:8080/api/v1/store
+Content-Type: application/json
+
+{
+  "key": "42",
+  "value": "Messi"
+}
+
+###
+
+POST http://localhost:8080/api/v1/store
+Content-Type: application/json
+
+{
+  "key": "29",
+  "value": "Ronaldo"
+}
+
+###
+POST http://localhost:8080/api/v1/store
+Content-Type: application/json
+
+{
+  "key": "27",
+  "value": "Shalini"
+}
+
+###
+PUT http://localhost:8080/api/v1/store
+Content-Type: application/json
+
+{
+  "key": "28",
+  "value": "Messi"
+}
+
+###
+
+DELETE http://localhost:8080/api/v1/store/42
+Content-Type: application/json
+
+###
+GET http://localhost:8080/api/v1/store
+Content-Type: application/json

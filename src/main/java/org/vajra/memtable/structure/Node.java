@@ -1,6 +1,8 @@
 package org.vajra.memtable.structure;
 
-public class Node<K, V> {
+import java.io.Serializable;
+
+public class Node<K, V> implements Serializable {
 
   private K key;
   private V value;

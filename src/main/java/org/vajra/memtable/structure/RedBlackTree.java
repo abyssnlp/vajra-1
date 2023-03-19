@@ -1,9 +1,11 @@
 package org.vajra.memtable.structure;
 
+import java.io.Serializable;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-public class RedBlackTree<K extends Comparable<K>, V> extends BinarySearchTree<K, V> {
+public class RedBlackTree<K extends Comparable<K>, V> extends BinarySearchTree<K, V>
+implements Serializable {
 
   // Reentrant RW Lock
   private final ReentrantReadWriteLock rwLock = new ReentrantReadWriteLock();

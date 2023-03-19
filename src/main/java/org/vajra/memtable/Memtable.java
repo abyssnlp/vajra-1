@@ -3,8 +3,12 @@ package org.vajra.memtable;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.Serializable;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import org.vajra.memtable.structure.Node;
 import org.vajra.memtable.structure.RedBlackTree;
 import org.vajra.memtable.wal.Request;
@@ -12,9 +16,11 @@ import org.vajra.memtable.wal.Response;
 import org.vajra.memtable.wal.SingularUpdateQueue;
 import org.vajra.memtable.wal.WALEntry;
 import org.vajra.memtable.wal.WriteAheadLog;
+import org.vajra.sstable.Flusher;
 
-public class Memtable<K extends Comparable<K>, V> {
+public class Memtable<K extends Comparable<K>, V> implements Serializable {
 
+  private static final Long MEMTABLE_THRESHOLD_BYTES = (long) (10 * 1024 * 1024);
   private static final String LOCATION = "/Users/shauryarawat/Documents/Databases/kv-store/wal";
   private final RedBlackTree<K, V> tree;
   private final SingularUpdateQueue<K, V> queue;
@@ -25,6 +31,9 @@ public class Memtable<K extends Comparable<K>, V> {
     wal = new WriteAheadLog<>(LOCATION);
     this.queue = new SingularUpdateQueue<>(wal);
     this.applyLog();
+    ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+    Flusher<K, V> flusher = new Flusher<>(this.tree, MEMTABLE_THRESHOLD_BYTES);
+    scheduler.scheduleAtFixedRate(flusher, 1, 5, TimeUnit.SECONDS);
   }
 
   public void applyLog() {

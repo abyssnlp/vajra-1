@@ -3,3 +3,5 @@
 .bsp
 .mvn
 target
+*.log
+wal

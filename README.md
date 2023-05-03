@@ -1,6 +1,6 @@
 Vajra DB
 ===
 
-In memory key value store backed by an LSM tree
+In memory fault-tolerant, key-value store backed by an LSM tree
 
 *WIP
